@@ -1,0 +1,64 @@
+<svg width="560" height="130" viewBox="0 0 560 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="iconGradDark" x1="40" y1="30" x2="140" y2="130" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#60A5FA"/>
+      <stop offset="1" stop-color="#22D3EE"/>
+    </linearGradient>
+
+    <linearGradient id="ringGradDark" x1="30" y1="20" x2="120" y2="110" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3B82F6"/>
+      <stop offset="1" stop-color="#06B6D4"/>
+    </linearGradient>
+
+    <linearGradient id="wordGradDark" x1="170" y1="40" x2="470" y2="120" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FAFC"/>
+      <stop offset="0.55" stop-color="#93C5FD"/>
+      <stop offset="1" stop-color="#22D3EE"/>
+    </linearGradient>
+
+    <filter id="shadowDark" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- Dark background -->
+  <rect width="560" height="130" rx="28"/>
+
+  <!-- Icon -->
+  <g transform="translate(26 10)" filter="url(#shadowDark)">
+    <!-- Lens circle -->
+    <circle cx="58" cy="56" r="38" stroke="url(#ringGradDark)" stroke-width="10"/>
+
+    <!-- Spend bars -->
+    <rect x="38" y="68" width="10" height="12" rx="3" fill="#60A5FA"/>
+    <rect x="54" y="58" width="10" height="22" rx="3" fill="#38BDF8"/>
+    <rect x="70" y="46" width="10" height="34" rx="3" fill="url(#iconGradDark)"/>
+
+    <!-- Trend line -->
+    <path d="M38 62L59 50L75 38" stroke="#E2E8F0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Lens handle -->
+    <line x1="84" y1="84" x2="112" y2="112" stroke="url(#iconGradDark)" stroke-width="10" stroke-linecap="round"/>
+
+    <!-- Small AI sparkle -->
+    <path d="M92 28L95 36L103 39L95 42L92 50L89 42L81 39L89 36L92 28Z" fill="#22D3EE"/>
+  </g>
+
+  <!-- Brand text -->
+  <text x="165" y="78"
+        font-family="Inter, Arial, Helvetica, sans-serif"
+        font-size="42"
+        font-weight="800"
+        letter-spacing="0.3"
+        fill="url(#wordGradDark)">
+    SpendLens
+  </text>
+
+  <text x="438" y="78"
+        font-family="Inter, Arial, Helvetica, sans-serif"
+        font-size="42"
+        font-weight="700"
+        fill="#F8FAFC">
+    AI
+  </text>
+</svg>
