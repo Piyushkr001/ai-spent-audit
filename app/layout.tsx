@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Footer } from "./_shared/Footer";
 import { Navbar } from "./_shared/Navbar";
+import { ThemeProvider } from "@/components/theme-provider";
 
 
 const exo = Exo_2({
@@ -24,14 +25,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
+    <html suppressHydrationWarning
       lang="en"
       className={cn("h-full", "antialiased", exo.className)}
     >
       <body className="min-h-full flex flex-col">
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
         <Navbar />
         {children}
         <Footer/>
+        </ThemeProvider>
       </body>
     </html>
   );
