@@ -51,26 +51,7 @@ const USE_CASES: { value: UseCase; label: string }[] = [
   { value: "mixed",    label: "Mixed / General" },
 ];
 
-// ─── Read / write localStorage safely ────────────────────────────────────────
-function readFromStorage(): AuditFormState | null {
-  try {
-    const raw = localStorage.getItem(LS_KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw) as AuditFormState;
-    if (!Array.isArray(parsed.tools) || parsed.tools.length === 0) return null;
-    return parsed;
-  } catch {
-    return null;
-  }
-}
 
-function writeToStorage(state: AuditFormState): void {
-  try {
-    localStorage.setItem(LS_KEY, JSON.stringify(state));
-  } catch {
-    // quota exceeded — silently ignore
-  }
-}
 
 // ─── Component ────────────────────────────────────────────────────────────────
 export function SpendAuditForm() {
@@ -80,34 +61,16 @@ export function SpendAuditForm() {
   const [activeCurrency, setActiveCurrency] = useState<CurrencyConfig>(DEFAULT_CURRENCY);
   const resultsRef = useRef<HTMLDivElement>(null);
 
-  // ── Hydrate from localStorage + auto-detect currency ──────────────────────
+  // ── Auto-detect currency ──────────────────────
   useEffect(() => {
-    const saved = readFromStorage();
     const detected = detectCurrencyFromLocale();
 
-    if (saved) {
-      setTimeout(() => {
-        setForm(saved);
-        const savedCurrency = saved.currencyCode
-          ? getCurrencyByCode(saved.currencyCode)
-          : detected;
-        setActiveCurrency(savedCurrency);
-        setHasHydrated(true);
-      }, 0);
-    } else {
-      setTimeout(() => {
-        setActiveCurrency(detected);
-        setForm((f) => ({ ...f, currencyCode: detected.code }));
-        setHasHydrated(true);
-      }, 0);
-    }
+    setTimeout(() => {
+      setActiveCurrency(detected);
+      setForm((f) => ({ ...f, currencyCode: detected.code }));
+      setHasHydrated(true);
+    }, 0);
   }, []);
-
-  // ── Persist to localStorage on every form change ──────────────────────────
-  useEffect(() => {
-    if (!hasHydrated) return;
-    writeToStorage(form);
-  }, [form, hasHydrated]);
 
   // ─── Form mutators ──────────────────────────────────────────────────────────
   const setTeamSize = useCallback(
@@ -320,7 +283,7 @@ export function SpendAuditForm() {
       {/* ─── Results ───────────────────────────────────────────────────────── */}
       {result && (
         <div ref={resultsRef}>
-          <AuditResults result={result} currency={activeCurrency} />
+          <AuditResults result={result} currency={activeCurrency} form={form} />
         </div>
       )}
     </div>

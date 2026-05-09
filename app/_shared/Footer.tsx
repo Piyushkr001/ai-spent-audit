@@ -31,7 +31,7 @@ export function Footer() {
           <div className="lg:col-span-1">
             <Image src="/Images/Logo/logo_light.svg" alt="Logo" width={150} height={150} priority className="cursor-pointer hover:opacity-90 dark:hidden" />
             <Image src="/Images/Logo/logo_dark.svg" alt="Logo" width={150} height={150} priority className="cursor-pointer hover:opacity-90 hidden dark:block" />
-            <p className="text-sm text-slate-600 dark:text-slate-200 leading-relaxed max-w-xs">
+            <p className="text-sm text-slate-600 dark:text-slate-200 leading-relaxed mt-4 max-w-xs">
               Free AI spend auditing for startup founders, CTOs, and engineering
               managers. Find the leaks before your next invoice hits.
             </p>

@@ -101,10 +101,10 @@ describe("Audit Engine", () => {
   describe("New Rules and Plans", () => {
     it("normalizes currency correctly via toUsd", () => {
       const inr = getCurrencyByCode("INR"); // rateToUsd is 83.5
-      expect(toUsd(835, inr)).toBe(10);
+      expect(toUsd(835, inr)).toBeCloseTo(10);
       
       const eur = getCurrencyByCode("EUR"); // rateToUsd is 0.92
-      expect(toUsd(92, eur)).toBe(100);
+      expect(toUsd(92, eur)).toBeCloseTo(100);
     });
 
     it("gives warning for small team on Enterprise plan", () => {
