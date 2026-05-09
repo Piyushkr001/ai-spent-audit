@@ -11,13 +11,13 @@ export type ToolId =
   | "v0";
 
 // ─── Plan tiers per tool ──────────────────────────────────────────────────────
-export type CursorPlan = "hobby" | "pro" | "business";
+export type CursorPlan = "hobby" | "pro" | "business" | "enterprise";
 export type GithubCopilotPlan = "individual" | "business" | "enterprise";
-export type ClaudePlan = "free" | "pro" | "team" | "api";
-export type ChatGPTPlan = "free" | "plus" | "team" | "enterprise";
+export type ClaudePlan = "free" | "pro" | "team" | "api" | "max" | "enterprise";
+export type ChatGPTPlan = "free" | "plus" | "team" | "enterprise" | "api";
 export type AnthropicApiPlan = "pay-as-you-go" | "scale";
 export type OpenAiApiPlan = "pay-as-you-go" | "tier1" | "tier2";
-export type GeminiPlan = "free" | "advanced" | "business" | "api";
+export type GeminiPlan = "free" | "advanced" | "business" | "api" | "pro" | "ultra";
 export type WindsurfPlan = "free" | "pro" | "team";
 export type V0Plan = "free" | "premium" | "team";
 

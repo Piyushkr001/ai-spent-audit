@@ -34,7 +34,7 @@ export default function AuditPage() {
           {/* Trust row */}
           <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
             {[
-              "100% client-side — nothing leaves your browser",
+              "Audit runs locally first — data stored only if you save/email",
               "Deterministic rules, not AI hallucinations",
               "Results in under 2 seconds",
             ].map((item) => (

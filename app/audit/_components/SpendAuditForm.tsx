@@ -20,6 +20,7 @@ import {
   DEFAULT_CURRENCY,
   detectCurrencyFromLocale,
   getCurrencyByCode,
+  toUsd,
   type CurrencyConfig,
 } from "@/lib/audit/currency";
 
@@ -150,7 +151,14 @@ export function SpendAuditForm() {
   // ─── Submit ─────────────────────────────────────────────────────────────────
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const auditResult = runAudit(form);
+    const normalizedForm = {
+      ...form,
+      tools: form.tools.map((t) => ({
+        ...t,
+        monthlySpend: toUsd(t.monthlySpend, activeCurrency),
+      })),
+    };
+    const auditResult = runAudit(normalizedForm);
     setResult(auditResult);
     setTimeout(() => {
       resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -296,7 +304,7 @@ export function SpendAuditForm() {
         {/* Card footer */}
         <div className="rounded-b-2xl border-t border-border bg-muted/30 px-6 py-4 flex items-center justify-between gap-4 flex-wrap">
           <p className="text-[10px] text-muted-foreground">
-            No data is stored — all processing happens in your browser.
+            The audit runs locally. Data is only stored if you choose to save or email the report.
           </p>
           <Button
             type="submit"

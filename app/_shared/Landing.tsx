@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import Link from "next/link";
 import {
   ArrowRight,
@@ -251,7 +251,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <SectionBadge>How it works</SectionBadge>
-            <GradientHeading className="mt-4">Audit in three simple steps</GradientHeading>
+            <GradientHeading id="how-it-works-heading" className="mt-4">Audit in three simple steps</GradientHeading>
             <p className="mt-4 text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
               No complex setup. No data exports. Just answers about where your AI budget is going.
             </p>

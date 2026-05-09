@@ -59,7 +59,48 @@ export function runAudit(form: AuditFormState): AuditResult {
       action = "Audit your invoice — you may have unused seats, duplicate subscriptions, or an outdated contract.";
     }
 
-    // ── Rule 2: Free-tier user paying for a pro plan with only 1 seat ───────
+    // ── Rule 2: Enterprise plan for a small team ────────────────────────────
+    else if (
+      row.plan === "enterprise" &&
+      row.seats < 5
+    ) {
+      const lowerPlan = toolMeta.plans.find(
+        (p) => (p.id === "team" || p.id === "business" || p.id === "pro") && !p.isFreeOrAPI && p.pricePerSeat > 0
+      ) || toolMeta.plans.find((p) => p.id !== "enterprise" && !p.isFreeOrAPI && p.pricePerSeat > 0);
+      
+      if (lowerPlan) {
+        const lowerCost = lowerPlan.pricePerSeat * row.seats;
+        if (lowerCost < row.monthlySpend) {
+          monthlySavings = Math.round(row.monthlySpend - lowerCost);
+          suggestedSpend = lowerCost;
+          severity = "warning";
+          insight = `Enterprise plan for only ${row.seats} seat(s) is overkill at $${row.monthlySpend.toFixed(0)}/mo. The "${lowerPlan.label}" plan would be $${lowerCost.toFixed(0)}/mo.`;
+          action = `Downgrade to the "${lowerPlan.label}" plan until you hit enterprise-scale requirements.`;
+        }
+      }
+    }
+
+    // ── Rule 3: Team plan with fewer than 3 seats — individual plan cheaper ──
+    else if (
+      (row.plan === "team" || row.plan === "business") &&
+      row.seats < 3
+    ) {
+      const indivPlan = toolMeta.plans.find(
+        (p) => p.id !== "team" && p.id !== "business" && p.id !== "enterprise" && !p.isFreeOrAPI && p.pricePerSeat > 0
+      );
+      if (indivPlan) {
+        const indivCost = indivPlan.pricePerSeat * row.seats;
+        if (indivCost < row.monthlySpend) {
+          monthlySavings = Math.round(row.monthlySpend - indivCost);
+          suggestedSpend = indivCost;
+          severity = "warning";
+          insight = `${planMeta?.label || "Team"} plan with only ${row.seats} seat(s) costs $${row.monthlySpend.toFixed(0)}/mo. Individual "${indivPlan.label}" plan would be $${indivCost.toFixed(0)}/mo.`;
+          action = `Downgrade to the "${indivPlan.label}" plan until your team grows beyond 3.`;
+        }
+      }
+    }
+
+    // ── Rule 4: Free-tier user paying for a pro plan with only 1 seat ───────
     else if (
       planMeta &&
       !planMeta.isFreeOrAPI &&
@@ -79,9 +120,9 @@ export function runAudit(form: AuditFormState): AuditResult {
       }
     }
 
-    // ── Rule 3: High API spend without cost controls ─────────────────────────
+    // ── Rule 5: High API spend without cost controls ─────────────────────────
     else if (
-      (toolId === "anthropic-api" || toolId === "openai-api") &&
+      (toolId === "anthropic-api" || toolId === "openai-api" || row.plan === "api") &&
       row.monthlySpend > 500
     ) {
       const potentialSaving = Math.round(row.monthlySpend * 0.2);
@@ -92,28 +133,7 @@ export function runAudit(form: AuditFormState): AuditResult {
       action = "Implement prompt caching, use lighter models (Haiku/GPT-4o-mini) for simple tasks, and set hard monthly budget alerts.";
     }
 
-    // ── Rule 4: Team plan with fewer than 3 seats — individual plan cheaper ──
-    else if (
-      row.plan === "team" &&
-      row.seats < 3 &&
-      expectedCost !== null
-    ) {
-      const indivPlan = toolMeta.plans.find(
-        (p) => p.id !== "team" && p.id !== "enterprise" && !p.isFreeOrAPI && p.pricePerSeat > 0
-      );
-      if (indivPlan) {
-        const indivCost = indivPlan.pricePerSeat * row.seats;
-        if (indivCost < row.monthlySpend) {
-          monthlySavings = Math.round(row.monthlySpend - indivCost);
-          suggestedSpend = indivCost;
-          severity = "warning";
-          insight = `Team plan with only ${row.seats} seat(s) costs $${row.monthlySpend.toFixed(0)}/mo. Individual "${indivPlan.label}" plan would be $${indivCost.toFixed(0)}/mo.`;
-          action = `Downgrade to the "${indivPlan.label}" plan until your team grows beyond 3.`;
-        }
-      }
-    }
-
-    // ── Rule 5: All good ──────────────────────────────────────────────────────
+    // ── Rule 6: All good ──────────────────────────────────────────────────────
     else {
       severity = "good";
       insight = `${toolMeta.name} spend looks well-calibrated for ${row.seats} seat(s) at $${row.monthlySpend.toFixed(0)}/mo.`;

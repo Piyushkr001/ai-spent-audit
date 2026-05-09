@@ -100,6 +100,11 @@ export function usdTo(usd: number, currency: CurrencyConfig): number {
   return usd * currency.rateToUsd;
 }
 
+/** Convert a local amount to USD. */
+export function toUsd(local: number, currency: CurrencyConfig): number {
+  return local / currency.rateToUsd;
+}
+
 // ─── Formatting ────────────────────────────────────────────────────────────────
 /**
  * Format a USD amount as local currency, compact style.

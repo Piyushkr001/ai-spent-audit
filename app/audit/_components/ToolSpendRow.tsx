@@ -154,6 +154,7 @@ export function ToolSpendRow({ row, index, canRemove, currency, onChange, onRemo
       {/* Remove button */}
       <div className="flex items-end justify-end sm:justify-center">
         <Button
+          type="button"
           variant="ghost"
           size="icon-sm"
           onClick={onRemove}

@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { runAudit } from "../lib/audit/engine";
 import type { AuditFormState } from "../lib/audit/types";
+import { toUsd, getCurrencyByCode } from "../lib/audit/currency";
 
 describe("Audit Engine", () => {
   it("calculates total monthly spend correctly", () => {
@@ -95,5 +96,67 @@ describe("Audit Engine", () => {
     expect(apiRecommendation?.insight).toContain("significant");
     expect(apiRecommendation?.action).toContain("budget alerts");
     expect(result.totalMonthlySavings).toBe(200); // 20% of 1000 = 200
+  });
+
+  describe("New Rules and Plans", () => {
+    it("normalizes currency correctly via toUsd", () => {
+      const inr = getCurrencyByCode("INR"); // rateToUsd is 83.5
+      expect(toUsd(835, inr)).toBe(10);
+      
+      const eur = getCurrencyByCode("EUR"); // rateToUsd is 0.92
+      expect(toUsd(92, eur)).toBe(100);
+    });
+
+    it("gives warning for small team on Enterprise plan", () => {
+      const form: AuditFormState = {
+        teamSize: 3,
+        useCase: "coding",
+        currencyCode: "USD",
+        tools: [
+          { id: "1", toolId: "cursor", plan: "enterprise", seats: 3, monthlySpend: 117 }, // 3 * 39
+        ],
+      };
+
+      const result = runAudit(form);
+      const rec = result.recommendations[0];
+      expect(rec.severity).toBe("warning");
+      expect(rec.insight).toContain("Enterprise plan");
+      expect(rec.action).toContain("Downgrade");
+    });
+
+    it("handles Claude Max and Enterprise plans without errors", () => {
+      const form: AuditFormState = {
+        teamSize: 10,
+        useCase: "coding",
+        currencyCode: "USD",
+        tools: [
+          { id: "1", toolId: "claude", plan: "max", seats: 10, monthlySpend: 500 }, // 10 * 50
+          { id: "2", toolId: "claude", plan: "enterprise", seats: 20, monthlySpend: 2000 },
+        ],
+      };
+
+      const result = runAudit(form);
+      // Both should be valid tools, overlap rule will trigger on Claude twice but it just consolidates.
+      // We just need to check they are evaluated.
+      expect(result.totalMonthlySpend).toBe(2500);
+    });
+
+    it("handles Gemini Pro and Ultra plans", () => {
+      const form: AuditFormState = {
+        teamSize: 5,
+        useCase: "coding",
+        currencyCode: "USD",
+        tools: [
+          { id: "1", toolId: "gemini", plan: "pro", seats: 5, monthlySpend: 100 }, // 5 * 20
+          { id: "2", toolId: "chatgpt", plan: "api", seats: 1, monthlySpend: 600 },
+        ],
+      };
+
+      const result = runAudit(form);
+      expect(result.totalMonthlySpend).toBe(700);
+      const apiRec = result.recommendations.find(r => r.toolId === "chatgpt");
+      expect(apiRec?.severity).toBe("warning"); // API spend > 500 triggers rule
+      expect(apiRec?.insight).toContain("API spend");
+    });
   });
 });

@@ -9,16 +9,16 @@ const PRODUCT_LINKS = [
 ];
 
 const RESOURCE_LINKS = [
-  { label: "AI Tool Comparison", href: "#" },
-  { label: "Savings Calculator", href: "#" },
-  { label: "Starter Guide", href: "#" },
+  { label: "AI Tool Comparison", href: "/" },
+  { label: "Savings Calculator", href: "/" },
+  { label: "Starter Guide", href: "/" },
   { label: "FAQ", href: "#faq" },
 ];
 
 const LEGAL_LINKS = [
-  { label: "Privacy Policy", href: "#" },
-  { label: "Terms of Use", href: "#" },
-  { label: "Credex Assignment", href: "#" },
+  { label: "Privacy Policy", href: "/" },
+  { label: "Terms of Use", href: "/" },
+  { label: "Credex Assignment", href: "/" },
 ];
 
 export function Footer() {

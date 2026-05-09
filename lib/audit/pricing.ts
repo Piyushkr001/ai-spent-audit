@@ -25,6 +25,7 @@ export const TOOLS: ToolMeta[] = [
       { id: "hobby",    label: "Hobby (Free)",  pricePerSeat: 0, isFreeOrAPI: true },
       { id: "pro",      label: "Pro",            pricePerSeat: 20 },
       { id: "business", label: "Business",       pricePerSeat: 40 },
+      { id: "enterprise", label: "Enterprise",   pricePerSeat: 39 },
     ],
   },
   {
@@ -46,6 +47,8 @@ export const TOOLS: ToolMeta[] = [
       { id: "pro",  label: "Pro",           pricePerSeat: 20 },
       { id: "team", label: "Team",          pricePerSeat: 25 },
       { id: "api",  label: "API (Custom)",  pricePerSeat: -1, isFreeOrAPI: true },
+      { id: "max",  label: "Max",           pricePerSeat: 50 },
+      { id: "enterprise", label: "Enterprise", pricePerSeat: -1 },
     ],
   },
   {
@@ -57,6 +60,7 @@ export const TOOLS: ToolMeta[] = [
       { id: "plus",       label: "Plus",        pricePerSeat: 20 },
       { id: "team",       label: "Team",        pricePerSeat: 25 },
       { id: "enterprise", label: "Enterprise",  pricePerSeat: -1, isFreeOrAPI: true },
+      { id: "api",        label: "API (Direct)", pricePerSeat: -1, isFreeOrAPI: true },
     ],
   },
   {
@@ -87,6 +91,8 @@ export const TOOLS: ToolMeta[] = [
       { id: "advanced", label: "Advanced",    pricePerSeat: 19.99 },
       { id: "business", label: "Business",    pricePerSeat: 22 },
       { id: "api",      label: "API (Custom)", pricePerSeat: -1, isFreeOrAPI: true },
+      { id: "pro",      label: "Pro",         pricePerSeat: 20 },
+      { id: "ultra",    label: "Ultra",       pricePerSeat: 30 },
     ],
   },
   {
