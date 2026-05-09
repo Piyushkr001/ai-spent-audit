@@ -85,17 +85,21 @@ export function SpendAuditForm() {
     const detected = detectCurrencyFromLocale();
 
     if (saved) {
-      setForm(saved);
-      // Use saved currency if present, else use auto-detected
-      const savedCurrency = saved.currencyCode
-        ? getCurrencyByCode(saved.currencyCode)
-        : detected;
-      setActiveCurrency(savedCurrency);
+      setTimeout(() => {
+        setForm(saved);
+        const savedCurrency = saved.currencyCode
+          ? getCurrencyByCode(saved.currencyCode)
+          : detected;
+        setActiveCurrency(savedCurrency);
+        setHasHydrated(true);
+      }, 0);
     } else {
-      setActiveCurrency(detected);
-      setForm((f) => ({ ...f, currencyCode: detected.code }));
+      setTimeout(() => {
+        setActiveCurrency(detected);
+        setForm((f) => ({ ...f, currencyCode: detected.code }));
+        setHasHydrated(true);
+      }, 0);
     }
-    setHasHydrated(true);
   }, []);
 
   // ── Persist to localStorage on every form change ──────────────────────────
