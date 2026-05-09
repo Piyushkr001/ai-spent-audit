@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { Footer } from "./_shared/Footer";
 import { Navbar } from "./_shared/Navbar";
 import { ThemeProvider } from "@/components/theme-provider";
+import {Toaster} from 'react-hot-toast'
 
 
 const exo = Exo_2({
@@ -39,6 +40,7 @@ export default function RootLayout({
         <Navbar />
         {children}
         <Footer/>
+        <Toaster  position="bottom-right" />
         </ThemeProvider>
       </body>
     </html>
