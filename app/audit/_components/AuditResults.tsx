@@ -23,20 +23,23 @@ const SEVERITY_ORDER = { critical: 0, warning: 1, info: 2, good: 3 };
 export function AuditResults({ result, currency, hideSaveAction, form }: Props) {
   const [email, setEmail] = useState("");
   const [companyName, setCompanyName] = useState("");
+  const [role, setRole] = useState("");
+  const [website, setWebsite] = useState(""); // Honeypot
   const [isSaving, setIsSaving] = useState(false);
   const [savedUrl, setSavedUrl] = useState<string | null>(null);
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form) return;
+    if (!form || !email) return;
     
     setIsSaving(true);
     try {
       const response = await axios.post("/api/audits", {
-        auditResult: result,
         form,
         email,
         companyName,
+        role,
+        website,
       });
       const data = response.data;
       const fullUrl = `${window.location.origin}${data.url}`;
@@ -99,7 +102,7 @@ export function AuditResults({ result, currency, hideSaveAction, form }: Props) 
         <div className="mt-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
           <h3 className="text-sm font-semibold mb-2">Save & Share Report</h3>
           <p className="text-xs text-slate-500 mb-4">
-            Get a permanent, shareable URL for this audit report. Enter your email (optional) to receive a copy.
+            Get a permanent, shareable URL for this audit report.
           </p>
           
           {savedUrl ? (
@@ -110,22 +113,43 @@ export function AuditResults({ result, currency, hideSaveAction, form }: Props) 
               </Button>
             </div>
           ) : (
-            <form onSubmit={handleSave} className="flex flex-col sm:flex-row gap-3">
-              <Input
-                type="email"
-                placeholder="Work Email (optional)"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="flex-1"
-              />
-              <Input
-                type="text"
-                placeholder="Company Name (optional)"
-                value={companyName}
-                onChange={(e) => setCompanyName(e.target.value)}
-                className="flex-1"
-              />
-              <Button type="submit" disabled={isSaving} className="gap-2 shrink-0">
+            <form onSubmit={handleSave} className="flex flex-col gap-3">
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Input
+                  type="email"
+                  placeholder="Work Email (required)"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="flex-1"
+                  required
+                />
+                <Input
+                  type="text"
+                  placeholder="Company Name (optional)"
+                  value={companyName}
+                  onChange={(e) => setCompanyName(e.target.value)}
+                  className="flex-1"
+                />
+                <Input
+                  type="text"
+                  placeholder="Role (optional)"
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  className="flex-1"
+                />
+                {/* Honeypot field */}
+                <input
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
+                  style={{ display: 'none' }}
+                  aria-hidden="true"
+                />
+              </div>
+              <Button type="submit" disabled={isSaving || !email} className="gap-2 shrink-0 sm:self-end">
                 <ShareNetwork size={16} />
                 {isSaving ? "Saving..." : "Save Report"}
               </Button>

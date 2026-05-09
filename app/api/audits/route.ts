@@ -2,18 +2,33 @@ import { NextResponse } from "next/server";
 import { db } from "@/db";
 import { audits, leads } from "@/db/schema";
 import crypto from "crypto";
+import { runAudit } from "@/lib/audit/engine";
+import { generateSummary } from "@/lib/ai/generate-summary";
+import { sendAuditConfirmationEmail } from "@/lib/email/resend";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { auditResult, form, email, companyName, role } = body;
+    const { form, email, companyName, role, website } = body;
 
-    if (!auditResult || !form) {
-      return NextResponse.json({ error: "Missing payload data" }, { status: 400 });
+    // Honeypot check
+    if (website) {
+      return NextResponse.json({ publicId: "silent-success", url: "/report/silent-success" });
     }
 
-    // Generate unique 8 character public ID
-    const publicId = crypto.randomBytes(4).toString("hex");
+    if (!form || !email) {
+      return NextResponse.json({ error: "Missing required fields (form or email)" }, { status: 400 });
+    }
+
+    // Server-side audit computation
+    const auditResult = runAudit(form);
+    
+    // Generate AI Summary (fallback built-in)
+    const summary = await generateSummary(form, auditResult);
+    auditResult.summaryMessage = summary;
+
+    // Generate unique 16 character public ID (8 bytes = 16 hex chars)
+    const publicId = crypto.randomBytes(8).toString("hex");
 
     const auditData = {
       publicId,
@@ -23,25 +38,34 @@ export async function POST(req: Request) {
       totalMonthlySavings: auditResult.totalMonthlySavings,
       totalAnnualSavings: auditResult.totalAnnualSavings,
       efficiencyScore: auditResult.efficiencyScore,
-      summary: auditResult.summaryMessage,
+      summary,
       publicPayload: auditResult,
     };
 
     // Insert Audit
     const [insertedAudit] = await db.insert(audits).values(auditData).returning();
 
-    // Insert Lead if email provided
-    if (email) {
-      await db.insert(leads).values({
-        auditId: insertedAudit.id,
-        email,
-        companyName,
-        role,
-        teamSize: form.teamSize,
-        monthlySavings: auditResult.totalMonthlySavings,
-        isHighSavings: auditResult.showCredexCTA,
-      });
-    }
+    // Insert Lead
+    await db.insert(leads).values({
+      auditId: insertedAudit.id,
+      email,
+      companyName,
+      role,
+      teamSize: form.teamSize,
+      monthlySavings: auditResult.totalMonthlySavings,
+      isHighSavings: auditResult.showCredexCTA,
+    });
+    
+    const fullUrl = `${process.env.NEXT_PUBLIC_APP_URL}/report/${publicId}`;
+    
+    // Send email
+    await sendAuditConfirmationEmail(
+      email,
+      fullUrl,
+      auditResult.totalMonthlySavings,
+      auditResult.totalAnnualSavings,
+      auditResult.showCredexCTA
+    );
 
     return NextResponse.json({ publicId, url: `/report/${publicId}` });
   } catch (error) {

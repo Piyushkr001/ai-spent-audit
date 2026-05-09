@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning
       lang="en"
-      className={cn("h-full", "antialiased", exo.className)}
+      className={cn("h-full", "antialiased", "font-sans", exo.variable)}
     >
       <body className="min-h-full flex flex-col">
         <ThemeProvider

@@ -58,7 +58,7 @@ const STEPS = [
 
 const FEATURES = [
   { icon: Lock, title: "No login required", desc: "Start auditing instantly. Your email is only asked after you see value." },
-  { icon: CurrencyDollar, title: "Current pricing-based audit", desc: "We use live plan data so your audit reflects what you'd actually pay today." },
+  { icon: CurrencyDollar, title: "Current pricing-based audit", desc: "We use verified pricing data from official vendor pages so your audit reflects what you'd actually pay today." },
   { icon: ChartBar, title: "Per-tool recommendations", desc: "Get actionable downgrade or consolidation advice for each AI tool you use." },
   { icon: Sparkle, title: "AI-generated summary", desc: "A concise, jargon-free narrative explaining your biggest saving opportunities." },
   { icon: LinkIcon, title: "Shareable public report URL", desc: "Send your CFO or board a clean, permanent link to your audit results." },

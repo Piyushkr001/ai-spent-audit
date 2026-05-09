@@ -62,7 +62,7 @@ export function runAudit(form: AuditFormState): AuditResult {
     // ── Rule 2: Enterprise plan for a small team ────────────────────────────
     else if (
       row.plan === "enterprise" &&
-      form.teamSize < 5
+      (form.teamSize < 25 || row.seats < 5)
     ) {
       const lowerPlan = toolMeta.plans.find(
         (p) => (p.id === "team" || p.id === "business" || p.id === "pro") && !p.isFreeOrAPI && p.pricePerSeat > 0

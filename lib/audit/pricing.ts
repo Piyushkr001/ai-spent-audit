@@ -15,7 +15,7 @@ export interface PlanMeta {
   isFreeOrAPI?: boolean;
 }
 
-// ─── Canonical pricing (2025 public pricing) ──────────────────────────────────
+// ─── Canonical pricing (Keep synchronized with PRICING_DATA.md) ──────────────────────────────────
 export const TOOLS: ToolMeta[] = [
   {
     id: "cursor",

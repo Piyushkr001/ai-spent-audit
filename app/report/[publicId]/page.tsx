@@ -14,12 +14,14 @@ export async function generateMetadata({ params }: { params: Promise<{ publicId:
 
   if (!audit) return { title: "Report Not Found" };
 
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL;
   return {
     title: `AI Spend Audit Report - $${audit.totalAnnualSavings} Found`,
     description: audit.summary,
     openGraph: {
       title: `AI Spend Audit Report`,
       description: audit.summary,
+      url: `${appUrl}/report/${resolvedParams.publicId}`,
     },
     twitter: {
       card: "summary_large_image",
