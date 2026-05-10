@@ -45,18 +45,15 @@ SpendLens AI audits a company's AI tool spending and identifies potential saving
 Important rules:
 - Do not invent pricing.
 - Do not invent tools.
-- Do not invent savings.
-- Use only the audit result provided.
-- Do not change the calculated monthly or annual savings.
+- Do not change calculated savings.
 - Do not claim guaranteed savings.
 - Be clear, practical, and finance-literate.
 - Keep the summary around 100 words.
 - Write in a professional but accessible tone.
-- If savings are high, mention that reviewing discounted AI infrastructure credits through Credex may be useful.
-- If savings are low, honestly say the team is already spending reasonably well.
 - Do not include private information such as email or company name.
 
 Audit result:
 {{AUDIT_RESULT_JSON}}
 
 Write one personalized summary paragraph.
+```

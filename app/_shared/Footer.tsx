@@ -15,22 +15,17 @@ const RESOURCE_LINKS = [
   { label: "FAQ", href: "/#faq" },
 ];
 
-const LEGAL_LINKS = [
-  { label: "Privacy Policy", href: "#privacy" },
-  { label: "Terms of Use", href: "#terms" },
-  { label: "Credex Assignment", href: "#credex" },
-];
 
 export function Footer() {
   return (
     <footer className="bg-linear-to-br from-blue-200 via-cyan-300 to-indigo-600 dark:from-blue-950 dark:via-slate-900 dark:to-slate-950 text-slate-700 dark:text-slate-200 border-t border-slate-800/60">
       {/* Main footer grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
           {/* Brand col */}
           <div className="lg:col-span-1">
-            <Image src="/Images/Logo/logo_light.svg" alt="Logo" width={150} height={150} priority className="cursor-pointer hover:opacity-90 dark:hidden" />
-            <Image src="/Images/Logo/logo_dark.svg" alt="Logo" width={150} height={150} priority className="cursor-pointer hover:opacity-90 hidden dark:block" />
+            <Image src="/Images/Logo/logo_light.svg" alt="Logo" width={150} height={40} priority className="cursor-pointer hover:opacity-90 dark:hidden" />
+            <Image src="/Images/Logo/logo_dark.svg" alt="Logo" width={150} height={40} priority className="cursor-pointer hover:opacity-90 hidden dark:block" />
             <p className="text-sm text-slate-600 dark:text-slate-200 leading-relaxed mt-4 max-w-xs">
               Free AI spend auditing for startup founders, CTOs, and engineering
               managers. Find the leaks before your next invoice hits.
@@ -80,24 +75,7 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Legal */}
-          <div>
-            <h3 className="text-xs font-semibold tracking-widest uppercase text-slate-800 dark:text-slate-200 mb-4">
-              Legal
-            </h3>
-            <ul className="space-y-2.5" role="list">
-              {LEGAL_LINKS.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-slate-600 hover:text-cyan-400 dark:text-slate-200 dark:hover:text-cyan-400 transition-colors duration-200"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+
         </div>
       </div>
 

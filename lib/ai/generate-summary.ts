@@ -12,16 +12,36 @@ export async function generateSummary(form: AuditFormState, auditResult: AuditRe
   try {
     const ai = new GoogleGenAI({ apiKey });
     
-    const prompt = `You are an expert SaaS procurement analyst. Provide a personalized, empathetic, and professional summary (approximately 100 words) of the following AI tool spend audit. Do not perform any math.
-    
-Team Size: ${form.teamSize}
-Primary Use Case: ${form.useCase}
-Current Monthly Spend: $${auditResult.totalMonthlySpend}
-Potential Monthly Savings: $${auditResult.totalMonthlySavings}
+    const prompt = `You are writing a concise AI spend audit summary for a startup founder, CTO, or engineering manager.
 
-Tools Audited:
-${auditResult.recommendations.map(r => `- ${r.toolName}: spend $${r.currentSpend}, suggested $${r.suggestedSpend}. Action: ${r.action}`).join("\n")}
-`;
+Product context:
+SpendLens AI audits a company's AI tool spending and identifies potential savings across tools such as Cursor, GitHub Copilot, Claude, ChatGPT, OpenAI API, Anthropic API, Gemini, Windsurf, and v0.
+
+Important rules:
+- Do not invent pricing.
+- Do not invent tools.
+- Do not change calculated savings.
+- Do not claim guaranteed savings.
+- Be clear, practical, and finance-literate.
+- Keep the summary around 100 words.
+- Write in a professional but accessible tone.
+- Do not include private information such as email or company name.
+
+Audit result:
+${JSON.stringify({
+  teamSize: form.teamSize,
+  primaryUseCase: form.useCase,
+  totalMonthlySpend: auditResult.totalMonthlySpend,
+  totalMonthlySavings: auditResult.totalMonthlySavings,
+  recommendations: auditResult.recommendations.map(r => ({
+    toolName: r.toolName,
+    currentSpend: r.currentSpend,
+    suggestedSpend: r.suggestedSpend,
+    action: r.action
+  }))
+}, null, 2)}
+
+Write one personalized summary paragraph.`;
 
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",

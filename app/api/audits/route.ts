@@ -20,6 +20,19 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Missing required fields (form or email)" }, { status: 400 });
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json({ error: "Invalid email format" }, { status: 400 });
+    }
+
+    if (!form.tools || !Array.isArray(form.tools) || form.tools.length === 0 || !form.tools.some((t: { toolId: string; monthlySpend: number }) => t.toolId && t.monthlySpend > 0)) {
+      return NextResponse.json({ error: "Invalid tools" }, { status: 400 });
+    }
+
+    if (typeof form.teamSize !== 'number' || form.teamSize <= 0) {
+      return NextResponse.json({ error: "Invalid team size" }, { status: 400 });
+    }
+
     // Server-side audit computation
     const auditResult = runAudit(form);
     
@@ -34,9 +47,9 @@ export async function POST(req: Request) {
       publicId,
       teamSize: form.teamSize,
       primaryUseCase: form.useCase || "mixed",
-      totalMonthlySpend: auditResult.totalMonthlySpend,
-      totalMonthlySavings: auditResult.totalMonthlySavings,
-      totalAnnualSavings: auditResult.totalAnnualSavings,
+      totalMonthlySpend: auditResult.totalMonthlySpend.toString(),
+      totalMonthlySavings: auditResult.totalMonthlySavings.toString(),
+      totalAnnualSavings: auditResult.totalAnnualSavings.toString(),
       efficiencyScore: auditResult.efficiencyScore,
       summary,
       publicPayload: auditResult,
@@ -52,7 +65,7 @@ export async function POST(req: Request) {
       companyName,
       role,
       teamSize: form.teamSize,
-      monthlySavings: auditResult.totalMonthlySavings,
+      monthlySavings: auditResult.totalMonthlySavings.toString(),
       isHighSavings: auditResult.showCredexCTA,
     });
     

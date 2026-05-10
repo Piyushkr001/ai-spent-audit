@@ -56,21 +56,48 @@ const USE_CASES: { value: UseCase; label: string }[] = [
 // ─── Component ────────────────────────────────────────────────────────────────
 export function SpendAuditForm() {
   const [form, setForm] = useState<AuditFormState>(DEFAULT_FORM);
+  const [normalizedForm, setNormalizedForm] = useState<AuditFormState | null>(null);
   const [result, setResult] = useState<AuditResult | null>(null);
   const [hasHydrated, setHasHydrated] = useState(false);
   const [activeCurrency, setActiveCurrency] = useState<CurrencyConfig>(DEFAULT_CURRENCY);
   const resultsRef = useRef<HTMLDivElement>(null);
 
-  // ── Auto-detect currency ──────────────────────
+  // ── Auto-detect currency or load from localStorage ──────────────────────
   useEffect(() => {
-    const detected = detectCurrencyFromLocale();
+    const saved = localStorage.getItem(LS_KEY);
+    let initialForm = DEFAULT_FORM;
+    let initialCurrency = DEFAULT_CURRENCY;
+
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        initialForm = { ...DEFAULT_FORM };
+        if (parsed.currencyCode) {
+           initialCurrency = getCurrencyByCode(parsed.currencyCode);
+           initialForm.currencyCode = parsed.currencyCode;
+        } else {
+           initialCurrency = detectCurrencyFromLocale();
+           initialForm.currencyCode = initialCurrency.code;
+        }
+      } catch { }
+    } else {
+      initialCurrency = detectCurrencyFromLocale();
+      initialForm.currencyCode = initialCurrency.code;
+    }
 
     setTimeout(() => {
-      setActiveCurrency(detected);
-      setForm((f) => ({ ...f, currencyCode: detected.code }));
+      setActiveCurrency(initialCurrency);
+      setForm(initialForm);
       setHasHydrated(true);
     }, 0);
   }, []);
+
+  // Save to localStorage
+  useEffect(() => {
+    if (hasHydrated) {
+      localStorage.setItem(LS_KEY, JSON.stringify(form));
+    }
+  }, [form, hasHydrated]);
 
   // ─── Form mutators ──────────────────────────────────────────────────────────
   const setTeamSize = useCallback(
@@ -114,14 +141,16 @@ export function SpendAuditForm() {
   // ─── Submit ─────────────────────────────────────────────────────────────────
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const normalizedForm = {
+    const normalized = {
       ...form,
+      currencyCode: "USD",
       tools: form.tools.map((t) => ({
         ...t,
         monthlySpend: toUsd(t.monthlySpend, activeCurrency),
       })),
     };
-    const auditResult = runAudit(normalizedForm);
+    const auditResult = runAudit(normalized);
+    setNormalizedForm(normalized);
     setResult(auditResult);
     setTimeout(() => {
       resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -283,7 +312,7 @@ export function SpendAuditForm() {
       {/* ─── Results ───────────────────────────────────────────────────────── */}
       {result && (
         <div ref={resultsRef}>
-          <AuditResults result={result} currency={activeCurrency} form={form} />
+          <AuditResults result={result} currency={activeCurrency} form={normalizedForm || form} />
         </div>
       )}
     </div>

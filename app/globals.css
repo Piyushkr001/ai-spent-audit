@@ -127,6 +127,6 @@
     }
 
     html {
-        @apply font-mono;
+        @apply font-sans;
     }
 }
