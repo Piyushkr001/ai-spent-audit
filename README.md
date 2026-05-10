@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SpendLens AI
 
-## Getting Started
+SpendLens AI is a free AI spend audit tool built for the Credex WebDev 2026 assignment. It helps startup founders, CTOs, and engineering managers review their AI tool spending, identify overspending, and estimate potential monthly and annual savings.
 
-First, run the development server:
+## Live URL
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+[https://spendlens-ai.vercel.app](https://spendlens-ai.vercel.app) *(Replace with actual deployment URL)*
+
+## Quick Start
+
+1. Clone the repository
+2. Install dependencies using `bun install`
+3. Set up the environment variables
+4. Run the development server with `bun run dev`
+5. Open [http://localhost:3000](http://localhost:3000)
+
+## Environment Variables
+
+Copy the `.env.example` file to `.env` and fill in the values:
+
+```
+DATABASE_URL=
+GEMINI_API_KEY=
+RESEND_API_KEY=
+NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Database Commands
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The project uses Drizzle ORM. You can run the following commands:
+- `bun run db:generate`: Generate migration files
+- `bun run db:migrate`: Run migrations
+- `bun run db:push`: Push schema changes directly to the database
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deploy Instructions
 
-## Learn More
+1. Push your code to a GitHub repository.
+2. Connect the repository to Vercel.
+3. Configure the environment variables in the Vercel dashboard.
+4. Deploy.
 
-To learn more about Next.js, take a look at the following resources:
+## 5 Technical/Product Trade-offs
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Deterministic Logic over AI Math**: The financial logic is hardcoded and deterministic rather than AI-generated to ensure consistent, testable, and defensible results.
+2. **Client-side initial calculation**: The audit engine runs locally on the client for instant feedback. The result is only sent to the server if the user chooses to save or email the report.
+3. **Fallback Summary**: If the Gemini API fails or is unavailable, the application falls back to a deterministic, rule-based text summary rather than breaking the user experience.
+4. **Honeypot over Captcha**: We implemented a honeypot field (`website`) instead of a traditional captcha to reduce friction for legitimate users while still catching automated spam bots.
+5. **Base UI / Shadcn**: We leveraged base UI primitives and Shadcn to rapidly build an accessible, responsive, and aesthetically pleasing interface without reinventing standard components.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Screenshots
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*(Placeholder for screenshots / loom video)*

@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: { params: Promise<{ publicId:
 
   if (!audit) return { title: "Report Not Found" };
 
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL;
+  const appUrl = (process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000").replace(/\/$/, "");
   return {
     title: `AI Spend Audit Report - $${audit.totalAnnualSavings} Found`,
     description: audit.summary,

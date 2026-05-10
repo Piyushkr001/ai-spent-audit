@@ -13,7 +13,7 @@ export async function POST(req: Request) {
 
     // Honeypot check
     if (website) {
-      return NextResponse.json({ publicId: "silent-success", url: "/report/silent-success" });
+      return NextResponse.json({ ok: true, spam: true });
     }
 
     if (!form || !email) {
@@ -25,8 +25,18 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid email format" }, { status: 400 });
     }
 
-    if (!form.tools || !Array.isArray(form.tools) || form.tools.length === 0 || !form.tools.some((t: { toolId: string; monthlySpend: number }) => t.toolId && t.monthlySpend > 0)) {
-      return NextResponse.json({ error: "Invalid tools" }, { status: 400 });
+    if (form.currencyCode !== "USD") {
+      return NextResponse.json({ error: "Form must be normalized to USD" }, { status: 400 });
+    }
+
+    const activeTools = form.tools ? form.tools.filter((t: { toolId: string }) => t.toolId) : [];
+    if (!Array.isArray(activeTools) || activeTools.length === 0) {
+      return NextResponse.json({ error: "Invalid tools: array is empty" }, { status: 400 });
+    }
+    
+    const toolsValid = activeTools.every((t: { seats: number; monthlySpend: number }) => typeof t.seats === "number" && t.seats > 0 && typeof t.monthlySpend === "number" && t.monthlySpend > 0);
+    if (!toolsValid) {
+      return NextResponse.json({ error: "Invalid tools: seats and monthlySpend must be > 0" }, { status: 400 });
     }
 
     if (typeof form.teamSize !== 'number' || form.teamSize <= 0) {
@@ -69,7 +79,8 @@ export async function POST(req: Request) {
       isHighSavings: auditResult.showCredexCTA,
     });
     
-    const fullUrl = `${process.env.NEXT_PUBLIC_APP_URL}/report/${publicId}`;
+    const appUrl = (process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000").replace(/\/$/, "");
+    const fullUrl = `${appUrl}/report/${publicId}`;
     
     // Send email
     await sendAuditConfirmationEmail(

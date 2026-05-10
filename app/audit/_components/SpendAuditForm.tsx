@@ -71,15 +71,23 @@ export function SpendAuditForm() {
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        initialForm = { ...DEFAULT_FORM };
-        if (parsed.currencyCode) {
-           initialCurrency = getCurrencyByCode(parsed.currencyCode);
-           initialForm.currencyCode = parsed.currencyCode;
+        if (
+          parsed &&
+          typeof parsed === "object" &&
+          Array.isArray(parsed.tools) &&
+          typeof parsed.teamSize === "number" &&
+          typeof parsed.currencyCode === "string"
+        ) {
+          initialForm = { ...DEFAULT_FORM, ...parsed };
+          initialCurrency = getCurrencyByCode(parsed.currencyCode);
         } else {
-           initialCurrency = detectCurrencyFromLocale();
-           initialForm.currencyCode = initialCurrency.code;
+          initialCurrency = detectCurrencyFromLocale();
+          initialForm.currencyCode = initialCurrency.code;
         }
-      } catch { }
+      } catch {
+        initialCurrency = detectCurrencyFromLocale();
+        initialForm.currencyCode = initialCurrency.code;
+      }
     } else {
       initialCurrency = detectCurrencyFromLocale();
       initialForm.currencyCode = initialCurrency.code;
@@ -310,9 +318,9 @@ export function SpendAuditForm() {
       </form>
 
       {/* ─── Results ───────────────────────────────────────────────────────── */}
-      {result && (
+      {result && normalizedForm && (
         <div ref={resultsRef}>
-          <AuditResults result={result} currency={activeCurrency} form={normalizedForm || form} />
+          <AuditResults result={result} currency={activeCurrency} form={normalizedForm} />
         </div>
       )}
     </div>

@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { Footer } from "./_shared/Footer";
 import { Navbar } from "./_shared/Navbar";
 import { ThemeProvider } from "@/components/theme-provider";
-import {Toaster} from 'react-hot-toast'
+import { Toaster } from 'sonner';
 
 
 const exo = Exo_2({

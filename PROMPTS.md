@@ -57,3 +57,16 @@ Audit result:
 
 Write one personalized summary paragraph.
 ```
+
+## Fallback Behavior
+
+If the Gemini API key is missing or the request fails (e.g., due to rate limits), the system automatically falls back to `getFallbackSummary()`. This ensures the user still gets a fast, deterministic summary of their savings without crashing the app.
+
+## Why this prompt?
+
+The prompt was heavily optimized to enforce strict constraints. Early testing showed that LLMs could easily hallucinate AI tools or generate incorrect math. By stating explicitly "Do not invent pricing" and "Do not change calculated savings", the prompt forces the LLM to strictly act as a summarizer of the JSON data rather than a calculator.
+
+## What was tried and rejected?
+
+- **Generating the entire audit using an LLM**: Rejected. LLMs cannot be trusted to perfectly reproduce pricing tiers or math logic for financial decisions.
+- **Passing the raw HTML/DOM to the LLM**: Rejected. It consumed too many tokens and led to slower generation times and occasional hallucinations. Instead, the deterministic engine generates a clean `AUDIT_RESULT_JSON` payload.

@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import type { AuditResult, AuditFormState } from "@/lib/audit/types";
 import type { CurrencyConfig } from "@/lib/audit/currency";
 import axios from "axios";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 import { ShareNetwork, Copy } from "@phosphor-icons/react";
 
 interface Props {
