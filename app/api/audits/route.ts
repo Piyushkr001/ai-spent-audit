@@ -34,7 +34,12 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid tools: array is empty" }, { status: 400 });
     }
     
-    const toolsValid = activeTools.every((t: { seats: number; monthlySpend: number }) => typeof t.seats === "number" && t.seats > 0 && typeof t.monthlySpend === "number" && t.monthlySpend > 0);
+    const toolsValid = activeTools.every((t: { toolId: string; plan: string; seats: number; monthlySpend: number }) => 
+      t.toolId && 
+      t.plan &&
+      typeof t.seats === "number" && Number.isFinite(t.seats) && t.seats > 0 && 
+      typeof t.monthlySpend === "number" && Number.isFinite(t.monthlySpend) && t.monthlySpend > 0
+    );
     if (!toolsValid) {
       return NextResponse.json({ error: "Invalid tools: seats and monthlySpend must be > 0" }, { status: 400 });
     }

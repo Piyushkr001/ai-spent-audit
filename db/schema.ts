@@ -16,7 +16,7 @@ export const audits = pgTable("audits", {
 
 export const leads = pgTable("leads", {
   id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
-  auditId: text("audit_id").references(() => audits.id).notNull(),
+  auditId: text("audit_id").references(() => audits.id, { onDelete: "cascade" }).notNull(),
   email: text("email").notNull(),
   companyName: text("company_name"),
   role: text("role"),

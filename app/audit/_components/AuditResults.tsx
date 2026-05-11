@@ -42,6 +42,10 @@ export function AuditResults({ result, currency, hideSaveAction, form }: Props) 
         website,
       });
       const data = response.data;
+      if (data.spam || !data.url) {
+        toast.success("Report saved successfully!");
+        return;
+      }
       const fullUrl = `${window.location.origin}${data.url}`;
       setSavedUrl(fullUrl);
       toast.success("Report saved successfully!");

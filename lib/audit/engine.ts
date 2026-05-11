@@ -74,8 +74,8 @@ export function runAudit(form: AuditFormState): AuditResult {
           monthlySavings = Math.round(row.monthlySpend - lowerCost);
           suggestedSpend = lowerCost;
           severity = "warning";
-          insight = `Enterprise plan for only ${row.seats} seat(s) is overkill at $${row.monthlySpend.toFixed(0)}/mo. The "${lowerPlan.label}" plan would be $${lowerCost.toFixed(0)}/mo.`;
-          action = `Downgrade to the "${lowerPlan.label}" plan until you hit enterprise-scale requirements.`;
+          insight = `Enterprise plan for a team of ${form.teamSize} with only ${row.seats} seat(s) may be premature at $${row.monthlySpend.toFixed(0)}/mo. The "${lowerPlan.label}" plan would be $${lowerCost.toFixed(0)}/mo.`;
+          action = `Consider downgrading to the "${lowerPlan.label}" plan unless SSO, advanced compliance, procurement, or custom support are needed.`;
         }
       }
     }

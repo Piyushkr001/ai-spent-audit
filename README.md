@@ -4,7 +4,7 @@ SpendLens AI is a free AI spend audit tool built for the Credex WebDev 2026 assi
 
 ## Live URL
 
-[https://spendlens-ai.vercel.app](https://spendlens-ai.vercel.app) *(Replace with actual deployment URL)*
+[https://spendlensai2.vercel.app](https://spendlensai2.vercel.app)
 
 ## Quick Start
 
@@ -49,4 +49,5 @@ The project uses Drizzle ORM. You can run the following commands:
 
 ## Screenshots
 
-*(Placeholder for screenshots / loom video)*
+<!-- TODO: Replace with actual screenshots or Loom video link -->
+![Screenshot Placeholder](https://via.placeholder.com/800x400?text=SpendLens+AI+Screenshot)

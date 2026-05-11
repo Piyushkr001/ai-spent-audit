@@ -121,7 +121,7 @@ describe("Audit Engine", () => {
       const rec = result.recommendations[0];
       expect(rec.severity).toBe("warning");
       expect(rec.insight).toContain("Enterprise plan");
-      expect(rec.action).toContain("Downgrade");
+      expect(rec.action).toContain("Consider downgrading");
     });
 
     it("handles Claude Max and Enterprise plans without errors", () => {
