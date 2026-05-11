@@ -3,9 +3,9 @@ import Image from "next/image";
 
 const PRODUCT_LINKS = [
   { label: "Run Free Audit", href: "/audit" },
-  { label: "How it works", href: "#how-it-works" },
-  { label: "Features", href: "#features" },
-  { label: "Pricing Data", href: "#pricing-data" },
+  { label: "How it works", href: "/#how-it-works" },
+  { label: "Features", href: "/#features" },
+  { label: "Pricing Data", href: "/#pricing-data" },
 ];
 
 const RESOURCE_LINKS = [

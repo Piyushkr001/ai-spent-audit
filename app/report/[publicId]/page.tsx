@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: { params: Promise<{ publicId:
 
   const appUrl = (process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000").replace(/\/$/, "");
   return {
-    title: `AI Spend Audit Report - $${audit.totalAnnualSavings} Found`,
+    title: `AI Spend Audit Report - $${Number(audit.totalAnnualSavings).toLocaleString("en-US")} Found`,
     description: audit.summary,
     openGraph: {
       title: `AI Spend Audit Report`,

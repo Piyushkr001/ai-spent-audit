@@ -25,6 +25,8 @@ RESEND_API_KEY=
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
 
+> **Note on Resend**: The Resend API uses `onboarding@resend.dev` for demo purposes. For production, you should use a verified sender domain.
+
 ## Database Commands
 
 The project uses Drizzle ORM. You can run the following commands:
@@ -49,5 +51,6 @@ The project uses Drizzle ORM. You can run the following commands:
 
 ## Screenshots
 
-<!-- TODO: Replace with actual screenshots or Loom video link -->
-![Screenshot Placeholder](https://via.placeholder.com/800x400?text=SpendLens+AI+Screenshot)
+![Landing Page](/public/screenshots/landing.png)
+![Audit Form](/public/screenshots/audit-form.png)
+![Audit Results](/public/screenshots/audit-results.png)

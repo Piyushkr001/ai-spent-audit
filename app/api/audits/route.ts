@@ -53,7 +53,7 @@ export async function POST(req: Request) {
     
     // Generate AI Summary (fallback built-in)
     const summary = await generateSummary(form, auditResult);
-    auditResult.summaryMessage = summary;
+    const auditResultWithSummary = { ...auditResult, summaryMessage: summary };
 
     // Generate unique 16 character public ID (8 bytes = 16 hex chars)
     const publicId = crypto.randomBytes(8).toString("hex");
@@ -67,7 +67,7 @@ export async function POST(req: Request) {
       totalAnnualSavings: auditResult.totalAnnualSavings.toString(),
       efficiencyScore: auditResult.efficiencyScore,
       summary,
-      publicPayload: auditResult,
+      publicPayload: auditResultWithSummary,
     };
 
     // Insert Audit
