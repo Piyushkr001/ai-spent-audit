@@ -51,7 +51,8 @@ The project uses Drizzle ORM. You can run the following commands:
 4. **Honeypot over Captcha**: We implemented a honeypot field (`website`) instead of a traditional captcha to reduce friction for legitimate users while still catching automated spam bots.
 5. **Base UI / Shadcn**: We leveraged base UI primitives and Shadcn to rapidly build an accessible, responsive, and aesthetically pleasing interface without reinventing standard components.
 
-## Screenshots / Demo
+## Screenshots
 
-<!-- TODO: Add real Loom video link or 3 screenshots here -->
-*Note: Final submission requires 3 real screenshots or a 30-second recording.*
+![Landing Page](/public/screenshots/landing.png)
+![Audit Form](/public/screenshots/audit-form.png)
+![Audit Results](/public/screenshots/audit-results.png)
