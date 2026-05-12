@@ -130,7 +130,7 @@ export function runAudit(form: AuditFormState): AuditResult {
       suggestedSpend = row.monthlySpend - potentialSaving;
       severity = "warning";
       insight = `API spend of $${row.monthlySpend.toFixed(0)}/mo is significant. Without spend caps and model tiering, waste is common.`;
-      action = "Implement prompt caching, use lighter models (Haiku/GPT-4o-mini) for simple tasks, set hard monthly budget alerts, and utilize Credex credits.";
+      action = "Implement prompt caching, use lighter models (Haiku/GPT-4o-mini) for simple tasks, set hard monthly budget alerts, and review discounted AI infrastructure credits through Credex.";
     }
 
     // ── Rule 6: All good ──────────────────────────────────────────────────────

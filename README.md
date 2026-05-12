@@ -16,6 +16,8 @@ SpendLens AI is a free AI spend audit tool built for the Credex WebDev 2026 assi
 
 ## Environment Variables
 
+Secrets must be configured via environment variables only.
+
 Copy the `.env.example` file to `.env` and fill in the values:
 
 ```
@@ -51,6 +53,4 @@ The project uses Drizzle ORM. You can run the following commands:
 
 ## Screenshots
 
-![Landing Page](/public/screenshots/landing.png)
-![Audit Form](/public/screenshots/audit-form.png)
-![Audit Results](/public/screenshots/audit-results.png)
+[▶️ Watch the SpendLens AI Demo on Loom (Placeholder link)](#)
