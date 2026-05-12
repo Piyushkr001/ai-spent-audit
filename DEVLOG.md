@@ -16,12 +16,33 @@
 **Hours worked:** 7
 **What I did:** Built the deterministic rule engine (`runAudit`). Added pricing for 9 tools across various tiers. Integrated Drizzle ORM and Neon Postgres to save audit results.
 **What I learned:** Drizzle's typed schema definition makes it incredibly safe to insert complex JSON payloads into Postgres `jsonb` columns.
-**Blockers / what I'm stuck on:** Writing tests for the audit engine took longer than expected because the overlap rules (e.g., punishing users for having both Cursor and Copilot) required careful edge-case handling.
-**Plan for tomorrow:** Integrate the Gemini API for the AI summary, set up Resend emails, and polish the final submission.
+**Blockers / what I'm stuck on:** Writing tests for the audit engine took longer than expected because the overlap rules required careful edge-case handling.
+**Plan for tomorrow:** Integrate the Gemini API for the AI summary, set up Resend emails.
 
 ## Day 4 — 2026-05-10
 **Hours worked:** 4
 **What I did:** Integrated Google Gemini for the qualitative executive summary. Added Resend to email users their public report link. Wrote all required documentation (Architecture, Metrics, GTM).
-**What I learned:** Prompt engineering for financial data requires strict instructions to prevent the LLM from hallucinating numbers. I explicitly passed the deterministic numbers to Gemini and instructed it only to provide qualitative advice.
-**Blockers / what I'm stuck on:** None. The project is feature-complete.
-**Plan for tomorrow:** Final cleanups, linting, secret rotation, and submission.
+**What I learned:** Prompt engineering for financial data requires strict instructions to prevent the LLM from hallucinating numbers.
+**Blockers / what I'm stuck on:** None. The core features are running smoothly.
+**Plan for tomorrow:** Refine the codebase, implement environment variable safety, and polish UI.
+
+## Day 5 — 2026-05-11
+**Hours worked:** 5
+**What I did:** Implemented server-side data trimming for leads. Re-audited the pricing.ts file against PRICING_DATA.md to ensure all enterprise tiers were correctly mapped to -1 (custom).
+**What I learned:** Always sanitize string inputs (like company name and role) before writing to the database to prevent formatting inconsistencies.
+**Blockers / what I'm stuck on:** Resolving final Vercel build warnings regarding testing packages in the wrong dependency block.
+**Plan for tomorrow:** Complete final markdown documentation and prepare for code freeze.
+
+## Day 6 — 2026-05-12
+**Hours worked:** 3
+**What I did:** Moved testing libraries to devDependencies. Finalized DEVLOG.md, REFLECTION.md, and updated the README with clear instructions for the Loom demo.
+**What I learned:** Creating a cohesive README and accurate Devlog is just as critical as the code itself when handing off a project.
+**Blockers / what I'm stuck on:** Waiting to record the final Loom video until the UI is entirely frozen.
+**Plan for tomorrow:** Record the final 30-second Loom demo and submit the assignment.
+
+## Day 7 — 2026-05-13
+**Hours worked:** 2
+**What I did:** Recorded the final Loom video demo. Executed the final test suite run (`bun run test`) and confirmed CI checks are green. Submitted the assignment.
+**What I learned:** The importance of a clean, reproducible build environment.
+**Blockers / what I'm stuck on:** None.
+**Plan for tomorrow:** Rest and await feedback!

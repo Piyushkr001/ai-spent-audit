@@ -10,6 +10,8 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     const { form, email, companyName, role, website } = body;
+    const trimmedCompanyName = companyName ? companyName.trim() : companyName;
+    const trimmedRole = role ? role.trim() : role;
 
     // Honeypot check
     if (website) {
@@ -25,11 +27,11 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid email format" }, { status: 400 });
     }
 
-    if (companyName && companyName.length > 100) {
+    if (trimmedCompanyName && trimmedCompanyName.length > 100) {
       return NextResponse.json({ error: "Company name too long" }, { status: 400 });
     }
 
-    if (role && role.length > 50) {
+    if (trimmedRole && trimmedRole.length > 50) {
       return NextResponse.json({ error: "Role too long" }, { status: 400 });
     }
 
@@ -85,8 +87,8 @@ export async function POST(req: Request) {
     await db.insert(leads).values({
       auditId: insertedAudit.id,
       email,
-      companyName,
-      role,
+      companyName: trimmedCompanyName,
+      role: trimmedRole,
       teamSize: form.teamSize,
       monthlySavings: auditResult.totalMonthlySavings.toString(),
       isHighSavings: auditResult.showCredexCTA,
