@@ -25,7 +25,7 @@ export const TOOLS: ToolMeta[] = [
       { id: "hobby",    label: "Hobby (Free)",  pricePerSeat: 0, isFreeOrAPI: true },
       { id: "pro",      label: "Pro",            pricePerSeat: 20 },
       { id: "business", label: "Business",       pricePerSeat: 40 },
-      { id: "enterprise", label: "Enterprise",   pricePerSeat: 39 },
+      { id: "enterprise", label: "Enterprise",   pricePerSeat: -1 },
     ],
   },
   {

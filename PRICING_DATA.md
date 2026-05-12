@@ -8,7 +8,7 @@ This document contains the verified pricing for all AI tools supported by the Sp
 - **Hobby (Free)**: $0 / seat / month
 - **Pro**: $20 / seat / month
 - **Business**: $40 / seat / month
-- **Enterprise**: $39 / seat / month (Custom / quote-based)
+- **Enterprise**: Custom / quote-based
 
 ## GitHub Copilot
 - **Vendor URL**: [https://github.com/features/copilot](https://github.com/features/copilot)

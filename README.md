@@ -53,4 +53,4 @@ The project uses Drizzle ORM. You can run the following commands:
 
 ## Screenshots
 
-[▶️ Watch the SpendLens AI Demo on Loom (Placeholder link)](#)
+<!-- TODO: Add real Loom video link here -->

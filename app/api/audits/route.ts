@@ -25,6 +25,14 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid email format" }, { status: 400 });
     }
 
+    if (companyName && companyName.length > 100) {
+      return NextResponse.json({ error: "Company name too long" }, { status: 400 });
+    }
+
+    if (role && role.length > 50) {
+      return NextResponse.json({ error: "Role too long" }, { status: 400 });
+    }
+
     if (form.currencyCode !== "USD") {
       return NextResponse.json({ error: "Form must be normalized to USD" }, { status: 400 });
     }
