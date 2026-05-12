@@ -21,7 +21,7 @@ This document contains the verified pricing for all AI tools supported by the Sp
 - **Free**: $0 / seat / month
 - **Pro**: $20 / seat / month
 - **Team**: $25 / seat / month
-- **Max**: $50 / seat / month
+- **Max**: Custom / usage-based / quote-based
 - **API (Custom)**: Custom / quote-based
 - **Enterprise**: Custom / quote-based
 
@@ -48,9 +48,9 @@ This document contains the verified pricing for all AI tools supported by the Sp
 - **Vendor URL**: [https://gemini.google.com/advanced](https://gemini.google.com/advanced)
 - **Free**: $0 / seat / month
 - **Advanced**: $19.99 / seat / month
-- **Pro**: $20 / seat / month
+- **Pro**: Custom / usage-based / quote-based
 - **Business**: $22 / seat / month
-- **Ultra**: $30 / seat / month
+- **Ultra**: Custom / usage-based / quote-based
 - **API (Custom)**: Custom / quote-based
 
 ## Windsurf
@@ -63,4 +63,4 @@ This document contains the verified pricing for all AI tools supported by the Sp
 - **Vendor URL**: [https://v0.dev/pricing](https://v0.dev/pricing)
 - **Free**: $0 / seat / month
 - **Premium**: $20 / seat / month
-- **Team**: $50 / seat / month
+- **Team**: Custom / usage-based / quote-based

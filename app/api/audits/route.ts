@@ -10,8 +10,8 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     const { form, email, companyName, role, website } = body;
-    const trimmedCompanyName = companyName ? companyName.trim() : companyName;
-    const trimmedRole = role ? role.trim() : role;
+    const trimmedCompanyName = (companyName && companyName.trim() !== "") ? companyName.trim() : null;
+    const trimmedRole = (role && role.trim() !== "") ? role.trim() : null;
 
     // Honeypot check
     if (website) {

@@ -1,36 +1,41 @@
 # User Interviews
 
+> **WARNING**: Do not submit fabricated interviews. Real interviews must be conducted before final submission.
+
 TODO: add 3 real interviews
 
 ## Interview 1
-- **Name/Initials**: 
+- **Name or initials**: 
 - **Role**: 
-- **Company Stage**: 
-- **Direct Quotes**:
+- **Company/project stage**: 
+- **Date**: 
+- **3 direct quotes**:
   1. 
   2. 
   3. 
-- **Surprising Insight**: 
-- **Design Change**: 
+- **Most surprising insight**: 
+- **What changed in the product/design because of the interview**: 
 
 ## Interview 2
-- **Name/Initials**: 
+- **Name or initials**: 
 - **Role**: 
-- **Company Stage**: 
-- **Direct Quotes**:
+- **Company/project stage**: 
+- **Date**: 
+- **3 direct quotes**:
   1. 
   2. 
   3. 
-- **Surprising Insight**: 
-- **Design Change**: 
+- **Most surprising insight**: 
+- **What changed in the product/design because of the interview**: 
 
 ## Interview 3
-- **Name/Initials**: 
+- **Name or initials**: 
 - **Role**: 
-- **Company Stage**: 
-- **Direct Quotes**:
+- **Company/project stage**: 
+- **Date**: 
+- **3 direct quotes**:
   1. 
   2. 
   3. 
-- **Surprising Insight**: 
-- **Design Change**: 
+- **Most surprising insight**: 
+- **What changed in the product/design because of the interview**: 
